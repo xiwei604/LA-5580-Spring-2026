@@ -55,6 +55,8 @@ totalPop
 #plot(totalPop["value"])
 
 #the sf package allows us to write to a shapefile or geojson
+#Unless you have set your working directory, it will default to what getwd() displayed
+#Go to the menu Session and select Set Working Directory and decide where you want output to be written
 st_write(totalPop, "totalPop_IAcounties.shp")
 
 
@@ -83,3 +85,5 @@ totalPopIA_tracts <- get_decennial(
 )
 totalPopIA_tracts
 st_write(totalPopIA_tracts, "totalPopIA_tracts.geojson")
+
+plot(totalPopIA_tracts["value"])
