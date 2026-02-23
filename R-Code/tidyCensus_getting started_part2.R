@@ -34,7 +34,7 @@ library(highcharter)
 
 
 
-#Display all the variable in the 2023 1 year ACS and open a tab to view the info
+#Display all the variable in the 2024 1 year ACS and open a tab to view the info
 ACS1_2024_variables <- load_variables(2024, "acs1", cache = TRUE)
 View(ACS1_2024_variables)
 
@@ -61,7 +61,7 @@ poverty_est_df <- get_acs(geography = "county",
               output = "wide",
               geometry = TRUE, 
               survey = "acs1",
-              year = 2023)
+              year = 2024)
 #look at the data frame and notice only 10 results!
 view(poverty_est_df)
 
@@ -89,6 +89,9 @@ poverty_est_df <- get_acs(geography = "county",
                           year = 2024)
 mapview(poverty_est_df)
 
+
+
+
 #now get the B05010_002 total number with a ratio value below 1
 poverty_under1_df <- get_acs(geography = "county", 
                           variables = "B05010_002",
@@ -106,7 +109,7 @@ poverty_df <- get_acs(geography = "county",
                       state = "Iowa", 
                       output = "wide",
                       geometry = TRUE,
-                      year = 2024)
+                     year = 2024)
 view(poverty_df)
 mapview(poverty_df)
 
@@ -117,7 +120,7 @@ st_write(poverty_df, "iowa_poverty.shp")
 #so save as a geojson!
 st_write(poverty_df, "iowa_poverty.geojson")
 
-#If we just wanted the data asa CSV, we could run the code above with geometry = FALSE
+#If we just wanted the data as a CSV, we could run the code above with geometry = FALSE
 poverty_df_noGeo <- get_acs(geography = "county", 
                       variables = c(poverty_est = "B05010_001",
                                     poverty_und1 = "B05010_002"),
@@ -127,4 +130,40 @@ poverty_df_noGeo <- get_acs(geography = "county",
                       year = 2024)
 view(poverty_df_noGeo)
 write_csv2(poverty_df_noGeo, "povertyRatio.csv", append = FALSE)
+
+
+
+# Sometimes you might want to get all the data from a table instead of 
+# listing it out like above. For example, to get the values for the 25 columns
+# that are part of B05010 "Ratio of Income to Poverty Level by Nativity of 
+# Children in Families and Subfamilies by Living Arrangements and Nativity of 
+# Parents" for Polk County, Iowa use the folloing script.
+# For more info on this data https://censusreporter.org/tables/B05010/
+polk_IncomePovertyLevel <- get_acs(
+  geography = "county", 
+  county = "Polk",
+  state = "IA",
+  table = "B05010", 
+  year = 2024
+)
+view(polk_IncomePovertyLevel)
+
+
+
+#one more example of how this combined variables works for getting three 
+#variables. Note you can't combine the year using c(2024, 2019) you 
+# have to do separate request and merge results.
+polk_education <- get_acs(
+  geography = "county",
+  county = "Polk",
+  state = "IA",
+  variables = c(percent_high_school = "DP02_0062P", 
+                percent_bachelors = "DP02_0065P",
+                percent_graduate = "DP02_0066P"),
+  #output = "wide",
+  geometry = TRUE,
+  year = 2024
+)
+view(polk_education)
+st_write(polk_education, "polk_education.geojson")
 
