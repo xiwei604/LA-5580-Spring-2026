@@ -35,12 +35,12 @@ library(highcharter)
 
 
 #Display all the variable in the 2023 1 year ACS and open a tab to view the info
-ACS1_2023_variables <- load_variables(2023, "acs1", cache = TRUE)
-View(ACS1_2023_variables)
+ACS1_2024_variables <- load_variables(2024, "acs1", cache = TRUE)
+View(ACS1_2024_variables)
 
 #for ACS5
-ACS5_2023_variables <- load_variables(2023, "acs5", cache = TRUE)
-View(ACS5_2023_variables)
+ACS5_2024_variables <- load_variables(2024, "acs5", cache = TRUE)
+View(ACS5_2024_variables)
 
 #name, label, concept and lowest level of geography available are displayed.
 # this table is searchable
@@ -86,7 +86,7 @@ poverty_est_df <- get_acs(geography = "county",
                           state = "Iowa", 
                           output = "wide",
                           geometry = TRUE,
-                          year = 2023)
+                          year = 2024)
 mapview(poverty_est_df)
 
 #now get the B05010_002 total number with a ratio value below 1
@@ -95,7 +95,7 @@ poverty_under1_df <- get_acs(geography = "county",
                           state = "Iowa", 
                           output = "wide",
                           geometry = TRUE,
-                          year = 2023)
+                          year = 2024)
 mapview(poverty_under1_df)
 
 
@@ -106,7 +106,7 @@ poverty_df <- get_acs(geography = "county",
                       state = "Iowa", 
                       output = "wide",
                       geometry = TRUE,
-                      year = 2023)
+                      year = 2024)
 view(poverty_df)
 mapview(poverty_df)
 
@@ -124,7 +124,7 @@ poverty_df_noGeo <- get_acs(geography = "county",
                       state = "Iowa", 
                       output = "wide",
                       geometry = FALSE,
-                      year = 2023)
+                      year = 2024)
 view(poverty_df_noGeo)
 write_csv2(poverty_df_noGeo, "povertyRatio.csv", append = FALSE)
 
